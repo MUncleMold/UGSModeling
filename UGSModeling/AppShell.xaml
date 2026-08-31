@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="UGSModeling.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UGSModeling"
+    Title="UGSModeling">
+
+
+    
+    <ShellContent
+        Title="HOME"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <ShellContent
+    Title="ВВОД ДАННЫХ"
+    ContentTemplate="{DataTemplate local:UploadData}"
+    Route="UploadData" />
+
+    <ShellContent
+    Title="ВЫЧИСЛИТЬ ПАРАМЕТР"
+    ContentTemplate="{DataTemplate local:Calculate}"
+    Route="Calculate" />
+
+    <ShellContent
+    Title="ПОСТРОИТЬ ГРАФИК"
+    ContentTemplate="{DataTemplate local:BuildGraph}"
+    Route="BuildGraph" />
+
+    <ShellContent
+    Title="ЦИКЛЫ ПХГ"
+    ContentTemplate="{DataTemplate local:Gister}"
+    Route="Gister" />
+    
+    <ShellContent
+  Title="ПОСТРОИТЬ ОТЧЕТ"
+  ContentTemplate="{DataTemplate local:ReportPage}"
+  Route="ReportPage" />
+
+
+    <ShellContent
+  Title="ОТПРАВИТЬ ПО ПОЧТЕ"
+  ContentTemplate="{DataTemplate local:EmailPage}"
+  Route="EmailPage" />
+</Shell>

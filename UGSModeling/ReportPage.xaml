@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:UGSModeling.ViewModels"
+             x:Class="UGSModeling.ReportPage"
+             Title="ReportPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,30,30,25" Spacing="18" MaximumWidthRequest="900" HorizontalOptions="Center">
+            <!-- ===================================================== -->
+            <!-- ЗАГОЛОВОК -->
+            <!-- ===================================================== -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Формирование отчёта" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label Text="Настройте параметры отчёта и выберите необходимые графики" FontSize="13" HorizontalOptions="Center" Opacity="0.7"/>
+            </VerticalStackLayout>
+            <!-- ===================================================== -->
+            <!-- СОЗДАНИЕ ОТЧЁТА -->
+            <!-- ===================================================== -->
+            <Border StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="1">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Параметры отчёта" FontSize="18" FontAttributes="Bold"/>
+                    <Grid ColumnDefinitions="170,*" RowDefinitions="Auto,Auto" ColumnSpacing="15" RowSpacing="12">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Название отчёта" VerticalOptions="Center"/>
+                        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding ReportName}" Placeholder="Введите название отчёта" HeightRequest="42"/>
+                        <Label Grid.Row="1" Grid.Column="0" x:Name="FilePathLabel" Text="{Binding SelectedFolderPath}" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                        <Button Grid.Row="1" Grid.Column="1" x:Name="SaveButton" Text="Сохранить отчёт" HorizontalOptions="Start" HeightRequest="42" Padding="20,0" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReportViewModel}}, Path=SaveWordDocumentButtonCommand}" CommandParameter="{Binding .}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+            <!-- ===================================================== -->
+            <!-- ВЫБОР ГРАФИКОВ -->
+            <!-- ===================================================== -->
+            <Border StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="1">
+                <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="3">
+                        <Label Text="Графики для включения в отчёт" FontSize="18" FontAttributes="Bold"/>
+                        <Label Text="Отметьте графики, которые необходимо добавить в документ" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                    <!-- Заголовок таблицы -->
+                    <Border StrokeThickness="1" Padding="0">
+                        <Grid ColumnDefinitions="1.1*,1.1*,2*,80" HeightRequest="42" ColumnSpacing="5">
+                            <Label Grid.Column="0" Text="X-параметр" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Column="1" Text="Y-параметр" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Column="2" Text="Описание" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Column="3" Text="Выбрать" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                    <!-- Список графиков -->
+                    <CollectionView ItemsSource="{Binding Graphs2}" HeightRequest="220" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="1.1*,1.1*,2*,80" ColumnSpacing="5" MinimumHeightRequest="42">
+                                    <Label Grid.Column="0" Text="{Binding XParam}" VerticalOptions="Center" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Column="1" Text="{Binding YParam}" VerticalOptions="Center" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Column="2" Text="{Binding GraphDesc}" VerticalOptions="Center" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <CheckBox Grid.Column="3" IsChecked="{Binding IsSelected}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+            <!-- ===================================================== -->
+            <!-- СПИСОК ОТЧЁТОВ -->
+            <!-- ===================================================== -->
+            <Border StrokeShape="RoundRectangle 12" Padding="20" StrokeThickness="1">
+                <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="3">
+                        <Label Text="Список отчётов" FontSize="18" FontAttributes="Bold"/>
+                        <Label Text="Ранее созданные отчёты" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                    <!-- Заголовок таблицы -->
+                    <Border StrokeThickness="1">
+                        <Grid ColumnDefinitions="2*,1.2*,90,90" HeightRequest="42" ColumnSpacing="5">
+                            <Label Grid.Column="0" Text="Название" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Column="1" Text="Дата" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0"/>
+                            <Label Grid.Column="2" Text="Действие" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Grid.Column="3" Text="" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                    <!-- Список отчётов -->
+                    <CollectionView ItemsSource="{Binding Reports}" HeightRequest="220" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="2*,1.2*,90,90" ColumnSpacing="7" MinimumHeightRequest="48">
+                                    <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Column="1" Text="{Binding Date}" VerticalOptions="Center" Margin="10,0" LineBreakMode="TailTruncation"/>
+                                    <Button Grid.Column="2" Text="Открыть" HeightRequest="38" Padding="8,0" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReportViewModel}}, Path=OpenFileCommand}" CommandParameter="{Binding Path}"/>
+                                    <Button Grid.Column="3" Text="Удалить" HeightRequest="38" Padding="8,0" Command="{Binding Source={RelativeSource AncestorType={x:Type local:ReportViewModel}}, Path=ReportDeleteCommand}" CommandParameter="{Binding .}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+            <!-- ===================================================== -->
+            <!-- НИЖНЯЯ КНОПКА -->
+            <!-- ===================================================== -->
+            <Button Text="Вернуться на главную страницу" Clicked="GoToMainPage" WidthRequest="240" HeightRequest="44" HorizontalOptions="Center" Margin="0,2,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

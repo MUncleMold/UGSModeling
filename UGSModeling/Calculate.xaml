@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:UGSModeling.ViewModels"
+             x:Class="UGSModeling.Calculate"
+             Title="ВЫЧИСЛИТЬ ПАРАМЕТР">
+
+    <ScrollView>
+        <StackLayout>
+            <Entry TextColor="White" IsEnabled="false" Placeholder="Вычисление" Text="{Binding Calc}"/>
+            <Entry TextColor="White" IsEnabled="false" Placeholder="Формула" Text="{Binding Form}"/>
+            <Entry Placeholder="Имя вычисляемого параметра*" Text="{Binding CalcName}"/>
+            <Entry Placeholder="Единицы измерения вычисляемого параметра*" Text="{Binding CalcUnit}"/>
+
+            <Label TextColor="Red" Text="!!!ОШИБКА ВВОДА!!! Проверьте формулу, выбор расчетной даты и поля ввода" IsVisible="{Binding EntryErr}"/>
+            <Label Text="{Binding Result}"/>
+            <Button Margin="0,0,0,15" Text="Вычислить" Command="{Binding CalculateResultCommand}"/>
+            <Button Margin="0,0,0,15" Text="Сохранить результат вычисления" Command="{Binding SaveParamCommand}"/>
+
+            <StackLayout Margin="0,0,0,15" HorizontalOptions="Center" Orientation="Horizontal">
+                <StackLayout Margin="25,0,25,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Button Margin="5,5,5,5" Text="1" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="2" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="3" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="4" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="5" Clicked="NewCalc"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Button Margin="5,5,5,5" Text="6" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="7" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="8" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="9" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="0" Clicked="NewCalc"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Margin="15,0,15,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Button Margin="5,5,5,5" Text="+" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="-" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="/" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="*" Clicked="NewCalc"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Button Margin="5,5,5,5" Text="(" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text=")" Clicked="NewCalc"/>
+                        <Button Margin="5,5,5,5" Text="." Clicked="NewCalc"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Margin="15,0,15,0">
+                    <Button Margin="5,5,5,5" Text="Pow" Clicked="NewCalc"/>
+                    <Button Margin="5,5,5,5" Text="," Clicked="NewCalc"/>
+                </StackLayout>
+
+                <DatePicker HorizontalOptions="Center" DateSelected="DateChanged" Date="{Binding SelectedDate}"/>
+            </StackLayout>
+
+
+            <Entry Placeholder="Имя Формулы" Text="{Binding FormName}"/>
+
+            <Button Margin="0,0,0,15" Text="Сохранить формулу" Command="{Binding SaveFormulaCommand}"/>
+            <Button Margin="0,0,0,15" Text="Очистить" Command="{Binding ClearCommand}"/>
+
+            <Label HorizontalOptions="Center" Text="ПАРАМЕТРЫ"></Label>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="0.25*" />
+                </Grid.ColumnDefinitions>
+                <Border  Grid.Column="0">
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Параметр"/>
+                </Border>
+                <Border Grid.Column="1">
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Ввести"/>
+                </Border>
+            </Grid>
+
+            <ScrollView MaximumHeightRequest="150" Margin="0,0,0,15">
+                <CollectionView ItemsSource="{Binding UniqNames}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.75*"/>
+                                    <ColumnDefinition Width="0.25*" />
+                                </Grid.ColumnDefinitions>
+                                <Border  Grid.Column="0">
+                                    <Label Margin="5,0,0,0" Text="{Binding}"/>
+                                </Border>
+                                <Border Grid.Column="1">
+                                    <Button Margin="25,-10,25,-10" Scale="0.5" Text="{Binding}" Clicked="AddParam"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+
+            <Label HorizontalOptions="Center" Text="ФОРМУЛЫ"></Label>
+
+            <Entry Placeholder="Поиск" Text="{Binding SearchFormText}" Completed="SearchComplete"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.70*"/>
+                    <ColumnDefinition Width="0.15*" />
+                    <ColumnDefinition Width="0.15*" />
+                </Grid.ColumnDefinitions>
+                <Border  Grid.Column="0">
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Наименование"/>
+                </Border>
+                <Border Grid.Column="1">
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Загрузить"/>
+                </Border>
+                <Border Grid.Column="2">
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Удалить"/>
+                </Border>
+            </Grid>
+
+            <ScrollView MaximumHeightRequest="150" Margin="0,0,0,15">
+                <CollectionView ItemsSource="{Binding SearchFormulas}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.70*"/>
+                                    <ColumnDefinition Width="0.15*" />
+                                    <ColumnDefinition Width="0.15*" />
+                                </Grid.ColumnDefinitions>
+                                <Border  Grid.Column="0">
+                                    <Label Margin="5,0,0,0" Text="{Binding FormDesc}"/>
+                                </Border>
+                                <Border Grid.Column="1">
+                                    <Button Margin="25,-10,25,-10" Scale="0.5" Text="A" Command="{Binding Source={RelativeSource AncestorType={x:Type local:CalculateViewModel}}, Path=LoadFormulaCommand}" CommandParameter="{Binding .}"/>
+                                </Border>
+                                <Border Grid.Column="2">
+                                    <Button Margin="25,-10,25,-10" Scale="0.5" Text="X" Command="{Binding Source={RelativeSource AncestorType={x:Type local:CalculateViewModel}}, Path=DeleteFormulaCommand}" CommandParameter="{Binding .}"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Label Margin="0,0,5,0" VerticalOptions="Center" Text="ПРОСМОТР ПАРАМЕТРОВ"/>
+                <Switch VerticalOptions="Center" Toggled="UGSCheck"/>
+            </StackLayout>
+
+            <StackLayout x:Name="UGSCheckTable" IsVisible="False">
+                <Entry Placeholder="Поиск" Text="{Binding SearchParamText}" Completed="SearchComplete"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.45*"/>
+                        <ColumnDefinition Width="0.15*" />
+                        <ColumnDefinition Width="0.15*" />
+                        <ColumnDefinition Width="0.15*" />
+                    </Grid.ColumnDefinitions>
+                    <Border  Grid.Column="0">
+                        <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Наименование"/>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Дата"/>
+                    </Border>
+                    <Border Grid.Column="2">
+                        <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Единицы измерения"/>
+                    </Border>
+                    <Border Grid.Column="3">
+                        <Label HorizontalOptions="Center" VerticalOptions="Center" Text="Значение"/>
+                    </Border>
+                </Grid>
+
+                <ScrollView MaximumHeightRequest="150" Margin="0,0,0,15">
+                    <CollectionView ItemsSource="{Binding UGSSearch}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.45*"/>
+                                        <ColumnDefinition Width="0.15*" />
+                                        <ColumnDefinition Width="0.15*" />
+                                        <ColumnDefinition Width="0.15*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0">
+                                        <Label Margin="5,0,0,0" HorizontalOptions="Start" LineBreakMode="TailTruncation" VerticalOptions="Center" Text="{Binding Name}"/>
+                                    </Border>
+                                    <Border Grid.Column="1">
+                                        <Label Margin="5,0,0,0" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Date}"/>
+                                    </Border>
+                                    <Border Grid.Column="2">
+                                        <Label Margin="5,0,0,0" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Unit}"/>
+                                    </Border>
+                                    <Border Grid.Column="3">
+                                        <Label Margin="5,0,0,0" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Value}"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </StackLayout>
+
+            <Button Text="Вернуться на главную страницу" Clicked="GoToMainPage"/>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

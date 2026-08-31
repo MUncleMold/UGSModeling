@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts" x:Class="UGSModeling.Gister" Title="ГИСТЕРЕЗИСНАЯ ДИАГРАММА">
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="15">
+            <!-- Переключатель типа пласта -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label x:Name="GorText" Text="ГОРИЗОНТАЛЬНЫЙ ПЛАСТ" TextColor="White" VerticalOptions="Center"/>
+                <Switch Toggled="PlastSwitchCom" IsToggled="{Binding PlastSwitch}" VerticalOptions="Center"/>
+                <Label x:Name="RadText" Text="РАДИАЛЬНЫЙ ПЛАСТ" TextColor="Gray" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <!-- ================= ПАНЕЛЬ ПАРАМЕТРОВ ================= -->
+            <Grid ColumnSpacing="15" RowSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition Width="220"/>
+                </Grid.ColumnDefinitions>
+                <!-- ===== ЛЕВАЯ КОЛОНКА ===== -->
+                <VerticalStackLayout Grid.Column="0" Spacing="4">
+                    <Label Text="Проницаемость, Д"/>
+                    <Entry x:Name="L1" Text="1" HeightRequest="40"/>
+                    <Label Text="Мощность пласта, м"/>
+                    <Entry x:Name="L2" Text="5" HeightRequest="40"/>
+                    <Label x:Name="L14l" Text="Глубина залегания, м" IsVisible="False"/>
+                    <Entry x:Name="L14" Text="100" IsVisible="False" HeightRequest="40"/>
+                    <Label x:Name="L3l" Text="Длина пласта, м"/>
+                    <Entry x:Name="L3" Text="500" HeightRequest="40"/>
+                    <Label Text="Пористоить, д.ед"/>
+                    <Entry x:Name="L4" Text="0,3" HeightRequest="40"/>
+                    <Label Text="Газовая постоянная Дж/кг К"/>
+                    <Entry x:Name="L5" Text="500" HeightRequest="40"/>
+                    <Label Text="Z-factor, д.ед."/>
+                    <Entry x:Name="L6" Text="0,8" HeightRequest="40"/>
+                    <Label Text="Температура пласта, К"/>
+                    <Entry x:Name="L7" Text="300" HeightRequest="40"/>
+                </VerticalStackLayout>
+                <!-- ===== ВТОРАЯ КОЛОНКА ===== -->
+                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                    <Label x:Name="L15l" Text="Радиус контура питания, м" IsVisible="False"/>
+                    <Entry x:Name="L15" Text="1000" IsVisible="False" HeightRequest="40"/>
+                    <Label x:Name="L8l" Text="Угол наклона пласта, градус"/>
+                    <Entry x:Name="L8" Text="-5,7" HeightRequest="40"/>
+                    <Label Text="Давление на контуре питания, МПа"/>
+                    <Entry x:Name="L9" Text="6" HeightRequest="40"/>
+                    <Label Text="Плотность воды, кг/куб.м."/>
+                    <Entry x:Name="L10" Text="1000" HeightRequest="40"/>
+                    <Label Text="Вязкость воды, сП"/>
+                    <Entry x:Name="L11" Text="1" HeightRequest="40"/>
+                    <Label Text="Давление в газовой части, МПа"/>
+                    <Entry x:Name="L12" Text="5,7" HeightRequest="40"/>
+                    <Label Text="Высота ГВК, м"/>
+                    <Entry x:Name="L13" Text="200" HeightRequest="40"/>
+                    <Label Text="Шаг интегрирования, сут."/>
+                    <HorizontalStackLayout Spacing="5">
+                        <Entry x:Name="St2" Text="1" IsEnabled="False" WidthRequest="70" HeightRequest="40"/>
+                        <Stepper Value="1" ValueChanged="StepChanged" HorizontalOptions="Start"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <!-- ================= ТАБЛИЦА ================= -->
+                <VerticalStackLayout Grid.Column="2" Spacing="0">
+                    <!-- Заголовок таблицы -->
+                    <Grid HeightRequest="45">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0">
+                            <Label Text="Период" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Border Grid.Column="1">
+                            <Label Text="Состояние" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Border Grid.Column="2">
+                            <Label Text="Длительность" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Border Grid.Column="3">
+                            <Label Text="Расход, кг/сут." HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                    <!-- Строки таблицы -->
+                    <CollectionView ItemsSource="{Binding PerTable}" HeightRequest="420">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="45">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0">
+                                        <Entry Text="{Binding PeriodNumber}" IsEnabled="False" Margin="3,0"/>
+                                    </Border>
+                                    <Border Grid.Column="1">
+                                        <Entry Text="{Binding State}" Margin="3,0"/>
+                                    </Border>
+                                    <Border Grid.Column="2">
+                                        <Entry Text="{Binding Duration}" Margin="3,0"/>
+                                    </Border>
+                                    <Border Grid.Column="3">
+                                        <Entry Text="{Binding Cost}" Margin="3,0"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+                <!-- ================= УПРАВЛЕНИЕ ================= -->
+                <VerticalStackLayout Grid.Column="3" Spacing="10">
+                    <Label Text="Период" VerticalOptions="Center"/>
+                    <HorizontalStackLayout Spacing="5">
+                        <Entry x:Name="St1" Text="10" IsEnabled="False" WidthRequest="70" HeightRequest="40"/>
+                        <Stepper Value="10" ValueChanged="PeriodChanged"/>
+                    </HorizontalStackLayout>
+                    <Button Text="Расчет" Clicked="Draw" HeightRequest="45"/>
+                    <Label Text="Авто-ввод расход" Margin="0,10,0,0"/>
+                    <Entry Text="{Binding Cost}" Completed="CostChange" HeightRequest="40"/>
+                    <Button Text="Вернуться на главную страницу" Clicked="GoToMainPage" HeightRequest="45" Margin="0,20,0,0"/>
+                </VerticalStackLayout>
+            </Grid>
+            <!-- ================= ГРАФИК 1 ================= -->
+            <Border Padding="5" HeightRequest="400">
+                <chart:SfCartesianChart Title="ГИСТЕРЕЗИСНАЯ ДИАГРАММА">
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Давление"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Масса"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+                    <chart:LineSeries ItemsSource="{Binding GisterData}" XBindingPath="X" YBindingPath="Y" EnableTooltip="True"/>
+                </chart:SfCartesianChart>
+            </Border>
+            <!-- ================= ГРАФИК 2 ================= -->
+            <Border Padding="5" HeightRequest="400">
+                <chart:SfCartesianChart Title="ВЫСОТА ГВК">
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Сутки"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="ГВК"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+                    <chart:LineSeries ItemsSource="{Binding GVKData}" XBindingPath="X" YBindingPath="Y" EnableTooltip="True"/>
+                </chart:SfCartesianChart>
+            </Border>
+            <!-- ================= ГРАФИК 3 ================= -->
+            <Border Padding="5" HeightRequest="400">
+                <chart:SfCartesianChart Title="ДАВЛЕНИЕ">
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Сутки"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Давление"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+                    <chart:LineSeries ItemsSource="{Binding PressureData}" XBindingPath="X" YBindingPath="Y" EnableTooltip="True"/>
+                </chart:SfCartesianChart>
+            </Border>
+            <!-- ================= ГРАФИК 4 ================= -->
+            <Border Padding="5" HeightRequest="400">
+                <chart:SfCartesianChart Title="ЗАКАЧКА/ОТКАЧКА">
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Сутки"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Закачка/откачка"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+                    <chart:LineSeries ItemsSource="{Binding UploadAndSelectData}" XBindingPath="X" YBindingPath="Y" EnableTooltip="True"/>
+                </chart:SfCartesianChart>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

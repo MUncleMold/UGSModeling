@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UGSModeling.EmailPage"
+             Title="EmailPage">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Margin="30,50,30,30" HorizontalOptions="Center">
+
+            <!-- Заголовок -->
+            <Label Text="Отправка отчетов из базы данных"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"/>
+
+            <!-- Поле для ввода email получателя -->
+            <Label Text="Email получателя:"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding RecipientEmail}"
+                   Placeholder="Введите адрес получателя"
+                   Keyboard="Email"/>
+
+            
+
+            <!-- Поле для темы письма -->
+            <Label Text="Тема письма:"
+                   FontAttributes="Bold"/>
+            <Entry Text="{Binding EmailSubject, Mode=TwoWay}"
+                   Placeholder="Тема письма"/>
+
+            <!-- Поле для сообщения -->
+            <Label Text="Сообщение:"
+                   FontAttributes="Bold"/>
+            <Editor Text="{Binding EmailBody}"
+                    Placeholder="Введите текст сообщения..."
+                    HeightRequest="100"/>
+
+            <!-- Список файлов -->
+            <Label Text="Отчеты для отправки:"
+                   FontAttributes="Bold"/>
+
+            <CollectionView ItemsSource="{Binding Reports2}"
+                           SelectionMode="Single"
+                           HeightRequest="250">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5"
+                              ColumnDefinitions="Auto,*,Auto">
+
+                            <CheckBox Grid.Column="0"
+                                     IsChecked="{Binding IsSelected}"
+                                     VerticalOptions="Center"/>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                Padding="5,0">
+                                <Label Text="{Binding Name}"
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Text="{Binding Path}"
+                                       FontSize="10"
+                                       TextColor="Gray"/>
+                             
+                            </VerticalStackLayout>
+
+                        
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            
+            
+            
+    
+
+           
+
+          
+
+            <!-- Кнопка отправки -->
+            <Button Text="Отправить по email"
+                    Command="{Binding SendEmail}"
+                    IsEnabled="{Binding IsSendEnabled}"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                            WidthRequest="200"  
+                    
+                HeightRequest="50"/>
+
+            <!-- Область для сообщений -->
+            <Label Text="{Binding MessageText}"
+                   TextColor="{Binding MessageColor}"
+                   IsVisible="{Binding IsMessageVisible}"
+                   Margin="0,10"
+                   FontSize="14"
+                   HorizontalOptions="Center"/>
+            <Button Text="Вернуться на главную" Clicked="GoToMainPage" WidthRequest="200"  
+/>
+
+        </VerticalStackLayout>
+        
+
+    </ScrollView>
+
+</ContentPage>

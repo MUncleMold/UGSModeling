@@ -1,0 +1,42 @@
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UGSModeling.LicenseWindow"
+             Title="LicenseWindow">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+
+            <Label Text="Введите лицензионный ключ"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+
+            <Label Text="Выберите файл лицензии:"
+                   FontSize="14"
+                   TextColor="Gray"/>
+
+            <Editor x:Name="LicenseEntry"
+                    Placeholder="Здесь отобразится ваша лицензия"
+                    HeightRequest="200"
+                    IsEnabled="False"
+                    AutoSize="TextChanges"/>
+
+           
+
+            <Button x:Name="LoadFileButton"
+                    Text="Загрузить из файла..."
+                    Clicked="OnLoadFileClicked"
+                    HorizontalOptions="Center"
+
+            />
+
+            <Label x:Name="StatusLabel"
+                   IsVisible="False"
+                   TextColor="Red"/>
+
+  
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
